@@ -12,6 +12,7 @@ Technologies Used
 5. datetime library
 
 Requirements
+
 The task is to use the github API to watch for new issues. The documentation of the github API can be found here: https://developer.github.com/v3/. The deliverable is a program in a language of your choice (preferably ruby/python/node) that:
 
 1. watches for new issues and reports them (with title, id, other info if you like, but fairly compact)
