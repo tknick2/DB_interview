@@ -36,19 +36,18 @@ def jprint(issue):
 ################################################################
 def ProcessIssue(issue, issues):
     
-    if issue['state'] == "open":
+    if issue['state'] == "open":        
         print("New Issue!!!!")
         jprint(issue)
     elif issue['state'] == "closed":
         print('Closed Issue!!!!')
         jprint(issue)
     
-    # for counting the total number of issues and closed issues in the entire repository
     closedIssues = 0
     allIssues = 0
 
-    # sum the issues and closed issues
-    for issue in issues:
+    # sum the total issues and closed issues
+    for issue in issues:        
         if issue['state'] == "closed":
             closedIssues += 1
         allIssues += 1
@@ -64,34 +63,29 @@ def ProcessIssue(issue, issues):
 # Accepts:      issue (issue object)
 # Returns:      returnEvents (collection of events that require processing)
 ################################################################
-def FindNewEvents(events, eventHandled):
-    
-    #collection of event objects to return
-    returnEvents = []
+def FindNewEvents(eventsAll, eventsHandled):
+        
+    eventsToProcess = []
 
     #add event objects that require processing to the return collection and return
-    for event in events:
-        # indicates whether the event has been handled already or not
-        foundIt = False
+    for event in eventsAll:
+        
+        handled = False
 
         # see if the event is present in both collections
         for eventHandled in eventsHandled:
             if event['id'] == eventHandled['id']:
-                foundIt = True
+                handled = True
                 break
 
         # event not handled yet...add it to the return collection    
-        if not foundIt:
-            returnEvents.append(event)
+        if not handled:
+            eventsToProcess.append(event)
     
-    return returnEvents
+    return eventsToProcess
 
-
-# collection of handled events
+# event management collections, chose collection for incoming events in case there is more than 1 at a time
 eventsHandled = []
-
-# collection of unhandled events 
-# chose a collection in case more than 1 new event comes back
 eventsToProcess = []
 
 #git API URLs for the repo of interest
@@ -100,16 +94,16 @@ eventsURL = "https://api.github.com/repos/omxhealth/t-k-interview/events"
 
 # main loop
 while True:
-    # no need to retrive data more often than 3 seconds, sometime the return is slow anyway
-    sleep(3)
+    
+    # no need to retrive data more often than 2 seconds, sometimes the return is slow anyway
+    sleep(2)
 
     # status update
     print("Checking for Issues...")
 
     # retrieve all current events and issues
     response = requests.get(eventsURL, auth=requests.auth.HTTPBasicAuth("tknick2", "GitIsGr8"))
-    events = response.json()
-    
+    events = response.json()    
     response = requests.get(issuesURL, {"state": "all"}, auth=requests.auth.HTTPBasicAuth("tknick2", "GitIsGr8"))
     issues = response.json()
 
@@ -117,8 +111,8 @@ while True:
     eventsToProcess = FindNewEvents(events, eventsHandled)
 
     # process new events
-    for event in eventsToProcess:
-        for issue in issues:
+    for event in eventsToProcess:        
+        for issue in issues:            
             
             # ensures there is an issue with the appropriate state, then displays it, and adds it to the handled collection
             if 'action' in event['payload'] and event['type'] == "IssuesEvent" and (event['payload']['action'] == "closed" or event['payload']['action'] == "opened") and issue['id'] == event['payload']['issue']['id']:
