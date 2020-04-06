@@ -16,7 +16,7 @@ Requirements
 The task is to use the github API to watch for new issues. The documentation of the github API can be found here: https://developer.github.com/v3/. The deliverable is a program in a language of your choice (preferably ruby/python/node) that:
 
 1. watches for new issues and reports them (with title, id, other info if you like, but fairly compact)
-    * the script runs in a loop and reports the title and id of any issue that is added in, continuation of the loop is indicated by "Checking for issues..." displayed to the terminal
+    * the script runs in a loop and reports the title and id of any issue that is added in, continuation of the loop is indicated by "Checking for issues..." being displayed to the terminal
 2. reports issues being closed (with same info as above)
     * the same loop will display the title and id for issues that have been closed
 3. whenever an issue is added/closed, reports the number of total existing/closed issues, but does not show details of the other issues

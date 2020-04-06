@@ -3,13 +3,13 @@
 # Tim Knickerbocker
 # Created April 3, 2020
 #
-# This program will watch a supplied github repo for new issues and closed issues and reports 
-# their title and id to the terminal. In addition, for each report, it will display the total number
-# of issues in the repo and the number of closed issues. 
+# This program will watch a supplied github repo for new issues and closed issues. It reports 
+# the title and id of those issues to the terminal. In addition, for each report, it will display 
+# the total number of issues in the repo and the number of closed issues. 
 # 
-# Note: Python is not my strongest language, so there are several cases in which I  
+# Note: Python is not my strongest language, so there are a few cases in which I  
 # used loops to manipulate data within collections. I am sure there are collection methods that 
-# can do lots of these things, but I don't have enough experience with Python to be confident in 
+# can do these things, but I don't have enough experience with Python to be confident in 
 # their use. That said, I am confident in the logic and functionality of the program.
 ####################################################################################################
 import requests
@@ -18,19 +18,19 @@ from time import sleep
 from datetime import datetime
 
 ################################################################
-# Description:  creates a string from a python object 
+# Description:  prints an issue's data
 # Accepts:      issue (issue object)
 # Returns:      void
 ################################################################
 def jprint(issue):    
     
     print("Issue Title: " + issue['title']) 
-    print("Issue ID: " + str(issue['id']))
+    print("Issue ID: " + str(issue['id']))    
 
 ################################################################
-# Description:  prints a new issue, and the current number 
-#               of existing open issues and closed issues 
-#               to the terminal with appropriate label messages
+# Description:  prints a new issue, the current number 
+#               of existing issues, and the numbe of closed issues 
+#               to the terminal with appropriate labels
 # Accepts:      issue (issue object), issues (collection of issues)
 # Returns:      void
 ################################################################
